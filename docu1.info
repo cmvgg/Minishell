@@ -84,7 +84,7 @@ getcwd: https://man7.org/linux/man-pages/man3/getcwd.3.html
 		size - Tamaño del buffer.
 	Devuelve: Un puntero a la cadena que contiene la ruta actual del directorio, 
 				o NULL si se produce un error (por ejemplo, si el buffer es demasiado pequeño).
------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 									READLINE
 						https://man7.org/linux/man-pages/man3/readline.3.html
 						https://03-jon-perez.gitbook.io/coding-library/c/readline
@@ -117,7 +117,7 @@ rl_replace_line
 rl_redisplay
 	Prototipo: void rl_redisplay(void);
 	Uso: Vuelve a mostrar la línea actual en la terminal.
-------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -env
 	Descripción: env se utiliza para mostrar el entorno actual 
@@ -159,4 +159,3 @@ unset
 		[name ...] - Los nombres de las variables a eliminar.
 	Devuelve: 0 si se ejecuta con éxito, o un código de error si falla.
 
-	
