@@ -1,4 +1,4 @@
-Nuevas funciones y conceptos:
+NUEVAS FUNCIONES Y CONCEPTOS:
 
 access: https://03-jon-perez.gitbook.io/coding-library/c/funciones/access
 	Prototipo: int access(const char *pathname, int mode);
@@ -57,7 +57,8 @@ ttyname: https://man7.org/linux/man-pages/man3/ttyname.3.html
 	Prototipo: char *ttyname(int fd);
 	Recibe:
 		fd - Descriptor de archivo.
-	Devuelve: Un puntero a una cadena con el nombre del terminal asociado a fd, o NULL si no es un terminal o hay un error.
+	Devuelve: Un puntero a una cadena con el nombre del terminal asociado a fd, 
+				o NULL si no es un terminal o hay un error.
 ttyslot
 	Prototipo: int ttyslot(void);
 	Devuelve: El índice del terminal actual en la tabla de terminales, o 1 si hay un error.
@@ -68,26 +69,32 @@ ioctl
 		request - Código de petición de control de E/S.
 		... - Argumentos adicionales que dependen de la petición.
 	Devuelve: La salida de la petición, y una salida 1 generalmente indica un error.
-	Uso: Realiza operaciones de control de E/S en dispositivos. Se usa mucho para configurar terminales.
+	Uso: Realiza operaciones de control de E/S en dispositivos. 
+			Se usa mucho para configurar terminales.
 getenv: https://man7.org/linux/man-pages/man3/getenv.3.html
 	Prototipo: char *getenv(const char *name);
 	Recibe:
 		name - Nombre de la variable de entorno.
-	Devuelve: Un puntero a la cadena con el valor de la variable de entorno, o NULL si no encuentra la cadena.
+	Devuelve: Un puntero a la cadena con el valor de la variable de entorno, 
+				o NULL si no encuentra la cadena.
 getcwd: https://man7.org/linux/man-pages/man3/getcwd.3.html
 	Prototipo: char *getcwd(char *buf, size_t size);
 	Recibe:
 		buf - Puntero a un buffer donde se almacenará la ruta actual.
 		size - Tamaño del buffer.
-	Devuelve: Un puntero a la cadena que contiene la ruta actual del directorio, o NULL si se produce un error (por ejemplo, si el buffer es demasiado pequeño).
+	Devuelve: Un puntero a la cadena que contiene la ruta actual del directorio, 
+				o NULL si se produce un error (por ejemplo, si el buffer es demasiado pequeño).
 -----------------------------------------------------------------------------------------
 									READLINE
 						https://man7.org/linux/man-pages/man3/readline.3.html
 						https://03-jon-perez.gitbook.io/coding-library/c/readline
 				Prototipo: char *readline(const char *prompt);
 				Recibe:
-						prompt - Un array que se muestra por terminal al usuario indicando que el programa ya está preparado para recibir la entrada.
-				Devuelve: Un puntero a la cadena de caracteres recibida, o NULL si se produce un error o solo recibe un fin de archivo (EOF). La cadena retornada está allocada (cuidado con los leaks).
+						prompt - Un array que se muestra por terminal al usuario 
+								indicando que el programa ya está preparado para recibir la entrada.
+				Devuelve: Un puntero a la cadena de caracteres recibida, 
+							o NULL si se produce un error o solo recibe un fin de archivo (EOF). 
+							La cadena retornada está allocada (cuidado con los leaks).
 
 
 add_history
@@ -99,7 +106,8 @@ rl_clear_history
 	Uso: Borra el historial de comandos almacenado por la biblioteca readline.
 rl_on_new_line
 	Prototipo: void rl_on_new_line(void);
-	Uso: Informa a readline que el usuario ha enviado el prompt. Se utiliza para actualizar el estado interno de readline.
+	Uso: Informa a readline que el usuario ha enviado el prompt. 
+			Se utiliza para actualizar el estado interno de readline.
 rl_replace_line
 	Prototipo: int rl_replace_line(const char *text, int clear_undo);
 	Recibe:
@@ -112,25 +120,32 @@ rl_redisplay
 ------------------------------------------------------------------------------------------
 
 -env
-	Descripción: env se utiliza para mostrar el entorno actual o ejecutar un comando en un entorno modificado.
+	Descripción: env se utiliza para mostrar el entorno actual 
+				o ejecutar un comando en un entorno modificado.
 	Prototipo: int env [OPTION]... [NAME=VALUE]... [COMMAND [ARG]...]
 	Recibe:
 		[OPTION]... - Opciones que controlan el comportamiento de env.
 		[NAME=VALUE]... - Variables de entorno que se establecerán para el comando.
 		[COMMAND [ARG]...] - El comando a ejecutar con los argumentos dados.
-	Devuelve: El código de salida del comando ejecutado, o 0 si se muestran las variables de entorno.
+	Devuelve: El código de salida del comando ejecutado, 
+				o 0 si se muestran las variables de entorno.
 -rutas relativas
-	Descripción: Una ruta relativa especifica una ubicación en el sistema de archivos en relación con el directorio actual.
-	Ejemplo: ./archivo.txt (archivo en el directorio actual), ../archivo.txt (archivo en el directorio padre).
+	Descripción: Una ruta relativa especifica una ubicación en el sistema de archivos en relación 
+					con el directorio actual.
+	Ejemplo: ./archivo.txt (archivo en el directorio actual), ../archivo.txt (archivo en el directorio 
+				padre).
 rutas absolutas
-	Descripción: Una ruta absoluta especifica una ubicación en el sistema de archivos desde la raíz del sistema.
+	Descripción: Una ruta absoluta especifica una ubicación en el sistema de archivos desde la raíz 
+					del sistema.
 	Ejemplo: /home/usuario/archivo.txt.
 variables de entorno
-	Descripción: Las variables de entorno son variables dinámicas que pueden afectar el comportamiento de procesos en un sistema operativo.
+	Descripción: Las variables de entorno son variables dinámicas 
+				que pueden afectar el comportamiento de procesos en un sistema operativo.
 	Ejemplo: PATH, HOME, USER.
 $? (expansión del código de entorno)
 	Descripción: $? se usa para expandir el código de salida del último comando ejecutado.
-	Ejemplo: Si el último comando se ejecutó correctamente, $? será 0. Si hubo un error, $? contendrá el código de error.
+	Ejemplo: Si el último comando se ejecutó correctamente, 
+				$? será 0. Si hubo un error, $? contendrá el código de error.
 export
 	Descripción: export se usa para marcar una variable para que se exporte a procesos hijos.
 	Prototipo: export [name[=value] ...]
@@ -143,3 +158,5 @@ unset
 	Recibe:
 		[name ...] - Los nombres de las variables a eliminar.
 	Devuelve: 0 si se ejecuta con éxito, o un código de error si falla.
+
+	
