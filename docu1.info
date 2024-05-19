@@ -5,7 +5,7 @@ access: https://03-jon-perez.gitbook.io/coding-library/c/funciones/access
 	Recibe:
 		pathname - Ruta del archivo a comprobar.
 		mode - Modo de acceso a verificar (F_OK, R_OK, W_OK, X_OK).
-		Devuelve: 0 si el acceso está permitido, -1 si hay un error.
+	Devuelve: 0 si el acceso está permitido, -1 si hay un error.
 signal: https://03-jon-perez.gitbook.io/coding-library/c/procesos-e-hilos/signals
 	Prototipo: void (*signal(int signum, void (*handler)(int)))(int);
 	Recibe:
