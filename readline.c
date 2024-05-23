@@ -6,54 +6,40 @@
 #include "inc/libft/01-Libft/libft.h"
 
 
-/*
-int main() 
+int main(int argc, char **argv)
 {
-    const char *line;
-    int i = 0;
-    char **split;
-    char **result;
-    int result_index = 0;
+    int f = 0;
     int j = 0;
+    int quote = 0;
 
-    line = readline("Ingresa una línea de texto: ");
-
-    split = ft_split(line, ' ');
-
-    while (split[j])
+    if(argv[j][f] == 34)
     {
-        j++;
-    }
-    // j = inidice inicial de cada palabra
-
-    result = malloc(sizeof(char) * (j + 1));
-    while (i < j)
-    {
-        if (split[i][0] == '-' && i > 0)
+        quote++;
+        f++;
+        while(argv[j][f])
         {
-            int len = ft_strlen(result[result_index - 1]) + ft_strlen(split[i]) + 2; //longitud de la palabra anterior y de la axtual 
-            char *combined;
-            combined = malloc(len * sizeof(char));
-            strcpy(combined, result[result_index - 1]);
-            strcat(combined, " ");
-            strcat(combined, split[i]);
-            result[result_index - 1] = combined;
+            if(argv[j][f] == 34)
+            {
+                quote--;
+                break ;
+            }
+            f++;
         }
-        else
-        {
-            result[result_index] = ft_strdup(split[i]);
-            result_index++;
-        }
-        i++;
     }
-    // Añadir el NULL al final del array result
-    result[result_index] = NULL;
-    i = 0;
-    while (result[i])
+    if(argv[j][f] == 34)
     {
-        printf("el resultado es: %s\n", result[i]);
-        i++;
+        f++;
+        quote++;
+        while(argv[j][f])
+        {
+            if(argv[j][f] == 34)
+            {
+                quote--;
+                break ;
+            }
+            f++;
+        }
     }
-    return 0;
+    printf("es: %d\n", quote);
+    return (0);
 }
-*/

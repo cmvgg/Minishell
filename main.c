@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/22 19:26:51 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:01:33 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,74 @@ int main()
     char **result;
     char *combined;
     int result_index = 0;
-    int j = 0;
-    int space_flag = 0; 
+    int space_flag = 0;
+    //int k = 0;
+    //int l = 0;
 
     line = readline("Ingresa una línea de texto: ");
 
     split = ft_split(line, ' ');
+    
+    int f = 0;
+    int j = 0;
+    int quote = 0;
 
+    /*while(split[j])
+    {
+    while(split[j][f])
+    {   
+    if(split[j][f] == 38)
+    {
+     write(1, &split[j][f], 1);
+        printf("\n\n%d\n\n", quote);
+        quote++;
+        f++;
+        while(split[j][f])
+        {
+            if(split[j][f] == 38 )
+            {
+                quote--;
+                break ;
+            }
+            f++;
+        }write(1, &split[j][f], 1);
+    }write(1, &split[j][f], 1);
+    if(split[j][f] == 34)
+    {
+        printf("P\n\n");
+        f++;
+        quote++;
+        while(split[j][f])
+        {
+            if(split[j][f] == 34)
+            {
+                quote--;
+                break ;
+            }
+            f++;
+        }
+    }
+    f++;
+    }
+    j++;
+    }
+    printf("es: %d\n", quote);*/
+    
+    
     while (split[j])
         j++; // j = inidice inicial de cada palabra
     
+ 
     result = malloc(sizeof(char *) * (j + 1));
 
     while (i < j) 
     {
         if (split[i][0] == '-' && i > 0) {
-            int len = strlen(result[result_index - 1]) + strlen(split[i]) + 2; // Longitud de la palabra anterior y de la actual
+            int len = ft_strlen(result[result_index - 1]) + ft_strlen(split[i]) + 2; // Longitud de la palabra anterior y de la actual
             combined = malloc(len * sizeof(char));
-            strcpy(combined, result[result_index - 1]);
-            strcat(combined, " ");
-            strcat(combined, split[i]);
+            ft_strlcpy(combined, result[result_index - 1], len);
+            ft_strlcat(combined, " ", len);
+            ft_strlcat(combined, split[i], len);
             result[result_index - 1] = combined;
         } 
         else 
@@ -58,17 +106,12 @@ int main()
             {
                 if (space_flag == 0)
                 {
-                    result[result_index] = strdup(split[i]);
+                    result[result_index] = ft_strdup(split[i]);
                     result_index++;
                 } 
                 else 
                 {
-                    if (result_index != 0) 
-                    {
-                        result[result_index] = strdup(" ");
-                        result_index++;
-                    }
-                    result[result_index] = strdup(split[i]);
+                    result[result_index] = ft_strdup(split[i]);
                     result_index++;
                     space_flag = 0;
                 }
@@ -90,3 +133,4 @@ int main()
         i++;
     }
 }
+

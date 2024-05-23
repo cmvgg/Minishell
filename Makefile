@@ -6,14 +6,14 @@
 #    By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/21 17:45:56 by jllarena          #+#    #+#              #
-#    Updated: 2024/05/22 18:59:59 by jllarena         ###   ########.fr        #
+#    Updated: 2024/05/23 15:54:02 by jllarena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            = minishell
 CC              = cc
 RM              = rm -rf
-CFLAGS          = -Wall -Wextra -Werror -Iinc/libft/01-Libft -g3 #-fsanitize=address
+CFLAGS          = -Wall -Wextra -Werror -Iinc/libft/01-Libft -g3 #-fsanitize=leak
 LREADLINE_FLAGS = -lreadline
 LIBFT_DIR       = inc/libft/01-Libft
 LIBFT           = $(LIBFT_DIR)/libft.a
