@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/24 12:19:38 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:52:13 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "inc/libft/01-Libft/libft.h"
-
+#include "minishell.h"
 
 int ft_quote(char **result)
 {
-   
     int j = 0;
-	int f = 0;
     int quote = 0;
-    
+
     while(result[j])
     {
+        int f = 0; 
         while(result[j][f])
         {   
-            if(result[j][f] == 39)
+            if(result[j][f] == 39) 
             {
                 quote++;
                 f++;
@@ -38,32 +37,33 @@ int ft_quote(char **result)
                     if(result[j][f] == 39 )
                     {
                         quote--;
-                        break ;
+                        //f++; 
+                        break;
                     }
                     f++;
                 }
             }
-            else if(result[j][f] == 34)
+            else if(result[j][f] == 34) 
             {   
-                f++;
                 quote++;
+                f++;
                 while(result[j][f])
                 {
                     if(result[j][f] == 34)
                     {
                         quote--;
-                        break ;
+                        //f++; 
+                        break;
                     }
-                	f++;
+                    f++;
                 }
             }
             f++;
         }
         j++;
     }
-   return (quote);
+    return (quote);
 }
-
 
 
 char *combined(char *prev_word, char *current_word)
@@ -120,13 +120,14 @@ char **runspace(char **split)
 }
 
 
+
 int main()
 {
     const char *line;
     
     line = readline("Ingresa una línea de texto: ");
 
-    char **split = ft_split(line, ' ');
+    char **split = ft_splitquote(line, ' ');
     char **result = runspace(split);
 	int quote = ft_quote(result);
 

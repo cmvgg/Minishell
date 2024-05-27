@@ -6,11 +6,12 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:37:52 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/24 13:07:38 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:09:07 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "minishell.h"
 #include "inc/libft/01-Libft/libft.h"
 
