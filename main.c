@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/27 17:52:13 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:09:00 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int ft_quote(char **result)
                     if(result[j][f] == 39 )
                     {
                         quote--;
-                        //f++; 
+                        f++; 
                         break;
                     }
                     f++;
@@ -52,7 +52,7 @@ int ft_quote(char **result)
                     if(result[j][f] == 34)
                     {
                         quote--;
-                        //f++; 
+                        f++; 
                         break;
                     }
                     f++;
