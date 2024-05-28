@@ -1,0 +1,5 @@
+"e'I'x'Z'U'o' "A'n'l'" la salida esperada es: quote es 0 la obtenida es quote es 2
+"R'J'E"d'o' 'S'i'K" '" la salida esperada es: quote es 0 la obtenida es quote es 2
+"f'e"C'N"Z" "j"T"a"a'" la salida esperada es: quote es 0 la obtenida es quote es 2
+"f"P'd"N"A'G'y'L' " "" la salida esperada es: quote es 0 la obtenida es quote es 2
+"a"g"W"M"S"e" "g"L'C"" la salida esperada es: quote es 0 la obtenida es quote es 2
