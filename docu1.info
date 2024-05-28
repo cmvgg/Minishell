@@ -1,0 +1,161 @@
+NUEVAS FUNCIONES Y CONCEPTOS:
+
+access: https://03-jon-perez.gitbook.io/coding-library/c/funciones/access
+	Prototipo: int access(const char *pathname, int mode);
+	Recibe:
+		pathname - Ruta del archivo a comprobar.
+		mode - Modo de acceso a verificar (F_OK, R_OK, W_OK, X_OK).
+	Devuelve: 0 si el acceso está permitido, -1 si hay un error.
+signal: https://03-jon-perez.gitbook.io/coding-library/c/procesos-e-hilos/signals
+	Prototipo: void (*signal(int signum, void (*handler)(int)))(int);
+	Recibe:
+		signum - Número de la señal.
+		handler - Puntero a la función manejadora de la señal.
+	Devuelve: El manejador anterior de la señal, o SIG_ERR en caso de error.
+sigaction
+	Prototipo: int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+	Recibe:
+		signum - Número de la señal.
+		act - Nueva acción para la señal.
+		oldact - Acción anterior de la señal.
+	Devuelve: 0 si la llamada fue exitosa, -1 si hubo un error.
+kill
+	Prototipo: int kill(pid_t pid, int sig);
+	Recibe:
+		pid - ID del proceso al cual enviar la señal.
+		sig - Número de la señal a enviar.
+	Devuelve: 0 si la señal fue enviada exitosamente, -1 si hubo un error.
+chdir
+	Prototipo: int chdir(const char *path);
+	Recibe:
+		path - Ruta al nuevo directorio de trabajo.
+	Devuelve: 0 si el cambio de directorio fue exitoso, -1 si hubo un error.
+stat
+	Prototipo: int stat(const char *pathname, struct stat *statbuf);
+	Recibe:
+		pathname - Ruta del archivo.
+		statbuf - Puntero a una estructura stat donde se almacenará la información del archivo.
+	Devuelve: 0 si la llamada fue exitosa, -1 si hubo un error.
+lstat
+	Prototipo: int lstat(const char *pathname, struct stat *statbuf);
+	Recibe:
+		pathname - Ruta del archivo.
+		statbuf - Puntero a una estructura stat donde se almacenará la información del archivo.
+	Devuelve: 0 si la llamada fue exitosa, -1 si hubo un error.
+fstat
+	Prototipo: int fstat(int fd, struct stat *statbuf);
+	Recibe:
+		fd - Descriptor de archivo.
+		statbuf - Puntero a una estructura stat donde se almacenará la información del archivo.
+	Devuelve: 0 si la llamada fue exitosa, -1 si hubo un error.
+isatty: https://man7.org/linux/man-pages/man3/isatty.3.html
+	Prototipo: int isatty(int fd);
+	Recibe:
+		fd - Descriptor de archivo.
+	Devuelve: 1 si fd está asociado a un terminal, 0 si no, -1 si hay un error.
+ttyname: https://man7.org/linux/man-pages/man3/ttyname.3.html
+	Prototipo: char *ttyname(int fd);
+	Recibe:
+		fd - Descriptor de archivo.
+	Devuelve: Un puntero a una cadena con el nombre del terminal asociado a fd, 
+				o NULL si no es un terminal o hay un error.
+ttyslot
+	Prototipo: int ttyslot(void);
+	Devuelve: El índice del terminal actual en la tabla de terminales, o 1 si hay un error.
+ioctl
+	Prototipo: int ioctl(int fd, unsigned long request, ...);
+	Recibe:
+		fd - Descriptor de archivo.
+		request - Código de petición de control de E/S.
+		... - Argumentos adicionales que dependen de la petición.
+	Devuelve: La salida de la petición, y una salida 1 generalmente indica un error.
+	Uso: Realiza operaciones de control de E/S en dispositivos. 
+			Se usa mucho para configurar terminales.
+getenv: https://man7.org/linux/man-pages/man3/getenv.3.html
+	Prototipo: char *getenv(const char *name);
+	Recibe:
+		name - Nombre de la variable de entorno.
+	Devuelve: Un puntero a la cadena con el valor de la variable de entorno, 
+				o NULL si no encuentra la cadena.
+getcwd: https://man7.org/linux/man-pages/man3/getcwd.3.html
+	Prototipo: char *getcwd(char *buf, size_t size);
+	Recibe:
+		buf - Puntero a un buffer donde se almacenará la ruta actual.
+		size - Tamaño del buffer.
+	Devuelve: Un puntero a la cadena que contiene la ruta actual del directorio, 
+				o NULL si se produce un error (por ejemplo, si el buffer es demasiado pequeño).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+									READLINE
+						https://man7.org/linux/man-pages/man3/readline.3.html
+						https://03-jon-perez.gitbook.io/coding-library/c/readline
+				Prototipo: char *readline(const char *prompt);
+				Recibe:
+						prompt - Un array que se muestra por terminal al usuario 
+								indicando que el programa ya está preparado para recibir la entrada.
+				Devuelve: Un puntero a la cadena de caracteres recibida, 
+							o NULL si se produce un error o solo recibe un fin de archivo (EOF). 
+							La cadena retornada está allocada (cuidado con los leaks).
+
+
+add_history
+	Prototipo: void add_history(const char *line);
+	Recibe:
+		line - La cadena de caracteres que se agregará al historial.
+rl_clear_history
+	Prototipo: void rl_clear_history(void);
+	Uso: Borra el historial de comandos almacenado por la biblioteca readline.
+rl_on_new_line
+	Prototipo: void rl_on_new_line(void);
+	Uso: Informa a readline que el usuario ha enviado el prompt. 
+			Se utiliza para actualizar el estado interno de readline.
+rl_replace_line
+	Prototipo: int rl_replace_line(const char *text, int clear_undo);
+	Recibe:
+		text - Una cadena de caracteres para reemplazar la línea actual.
+		clear_undo - Si es distinto de cero, borra el búfer de deshacer.
+	Devuelve: Siempre devuelve 0.
+rl_redisplay
+	Prototipo: void rl_redisplay(void);
+	Uso: Vuelve a mostrar la línea actual en la terminal.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-env
+	Descripción: env se utiliza para mostrar el entorno actual 
+				o ejecutar un comando en un entorno modificado.
+	Prototipo: int env [OPTION]... [NAME=VALUE]... [COMMAND [ARG]...]
+	Recibe:
+		[OPTION]... - Opciones que controlan el comportamiento de env.
+		[NAME=VALUE]... - Variables de entorno que se establecerán para el comando.
+		[COMMAND [ARG]...] - El comando a ejecutar con los argumentos dados.
+	Devuelve: El código de salida del comando ejecutado, 
+				o 0 si se muestran las variables de entorno.
+-rutas relativas
+	Descripción: Una ruta relativa especifica una ubicación en el sistema de archivos en relación 
+					con el directorio actual.
+	Ejemplo: ./archivo.txt (archivo en el directorio actual), ../archivo.txt (archivo en el directorio 
+				padre).
+rutas absolutas
+	Descripción: Una ruta absoluta especifica una ubicación en el sistema de archivos desde la raíz 
+					del sistema.
+	Ejemplo: /home/usuario/archivo.txt.
+variables de entorno
+	Descripción: Las variables de entorno son variables dinámicas 
+				que pueden afectar el comportamiento de procesos en un sistema operativo.
+	Ejemplo: PATH, HOME, USER.
+$? (expansión del código de entorno)
+	Descripción: $? se usa para expandir el código de salida del último comando ejecutado.
+	Ejemplo: Si el último comando se ejecutó correctamente, 
+				$? será 0. Si hubo un error, $? contendrá el código de error.
+export
+	Descripción: export se usa para marcar una variable para que se exporte a procesos hijos.
+	Prototipo: export [name[=value] ...]
+	Recibe:
+		[name[=value] ...] - Los nombres de las variables a exportar, opcionalmente con valores.
+	Devuelve: 0 si se ejecuta con éxito, o un código de error si falla.
+unset
+	Descripción: unset se usa para eliminar variables de entorno o de shell.
+	Prototipo: unset [name ...]
+	Recibe:
+		[name ...] - Los nombres de las variables a eliminar.
+	Devuelve: 0 si se ejecuta con éxito, o un código de error si falla.
+
