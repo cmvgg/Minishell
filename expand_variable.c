@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   expand_variable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 17:41:38 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/29 11:46:11 by jllarena         ###   ########.fr       */
+/*   Created: 2024/05/28 19:07:27 by jllarena          #+#    #+#             */
+/*   Updated: 2024/05/29 13:23:45 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "minishell.h"
+#include "inc/libft/01-Libft/libft.h"
 
-int     ft_quote(char **result);
-char	**ft_splitquote(char const *s, char c);
-char	**ft_splitmeta(char const *s, char c);
-char    *expand_variable(char *variable_name);
+char *expand_variable(char *variable_name)
+{
+    char *value = getenv(variable_name);
+    if (value)
+        return ft_strdup(value); 
+    else 
+        return ""; 
+}
+
 

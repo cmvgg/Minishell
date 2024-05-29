@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/28 17:18:22 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:24:17 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,17 +128,16 @@ int main()
     line = readline("Ingresa una línea de texto: ");
 
     char **split = ft_splitmeta(line, ' ');
+
     char **result = runspace(split);
 	int quote = ft_quote(result);
     int i = 0;
-    
     
     while (result[i])
     {
         printf("El resultado es: %s\n", result[i]);
         i++;
     }
-    
 	printf("quote es %d\n", quote);
     i = 0;
     while (result[i])
@@ -147,12 +146,24 @@ int main()
         i++;
     }
     free(result);
-
     return 0;
 }
 
-/*
-int main()
+/*int main()
+{
+    char *variable_name = "PATH";
+    char *expanded_value = expand_variable(variable_name);
+    if (expanded_value)
+    {
+        printf("El valor de %s es: %s\n", variable_name, expanded_value);
+        free(expanded_value);
+    } 
+    else 
+        printf("La variable %s no fue encontrada.\n", variable_name);
+    return 0;
+}*/
+
+/*int main()
 {
     int i = 0;
     char *str[] = {"wñigf suiahfi "awef" 'aoihfoh", NULL};
@@ -165,5 +176,3 @@ int main()
     
     return 0;
 }*/
-
-

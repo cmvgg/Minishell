@@ -6,7 +6,7 @@
 #    By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/21 17:45:56 by jllarena          #+#    #+#              #
-#    Updated: 2024/05/28 17:22:57 by jllarena         ###   ########.fr        #
+#    Updated: 2024/05/29 11:46:38 by jllarena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LREADLINE_FLAGS = -lreadline
 LIBFT_DIR       = inc/libft/01-Libft
 LIBFT           = $(LIBFT_DIR)/libft.a
 
-SRC = main.c ft_splitquote.c ft_splitmeta.c
+SRC = main.c ft_splitquote.c ft_splitmeta.c expand_variable.c
 
 OBJ = $(SRC:.c=.o)
 

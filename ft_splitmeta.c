@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:48:55 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/28 17:32:21 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:12:21 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ char	**ft_splitmeta(char const *s, char c)
 		ft_strlcpyquote(split[limit], s + init, final - init + 1);
 		
 		if (contains_dollar)
-			strcat(split[limit], " (cotain $)");
+		{
+			// expand_variable();   LLAMADA A LA FUNCION PARA EXPANDIR
+			ft_strlcat(split[limit], " (cotain $)", 10);
+		}
 
 		limit++;
 	}
