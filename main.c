@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/29 13:24:17 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:47:50 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ char **runspace(char **split)
     return result;
 }
 
-
-
 int main()
 {
     const char *line;
@@ -129,25 +127,27 @@ int main()
 
     char **split = ft_splitmeta(line, ' ');
 
+    if (!split)
+        return 1;
     char **result = runspace(split);
-	int quote = ft_quote(result);
+    int quote = ft_quote(result);
     int i = 0;
-    
     while (result[i])
     {
         printf("El resultado es: %s\n", result[i]);
         i++;
     }
-	printf("quote es %d\n", quote);
+    printf("quote es %d\n", quote);
     i = 0;
     while (result[i])
-	{
+    {
         free(result[i]);
         i++;
     }
     free(result);
     return 0;
 }
+
 
 /*int main()
 {
