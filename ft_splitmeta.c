@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:48:55 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/31 13:22:37 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:29:16 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ static char **ft_free(char **split)
     return 0;
 }
 
+
 static int check_syntax(const char *s, size_t init, size_t final)
 {
     size_t i = init;
-    
+
     while (i < final)
     {
         if (s[i] == '|')
@@ -96,13 +97,9 @@ static int check_syntax(const char *s, size_t init, size_t final)
         }
         else if (s[i] == '>' || s[i] == '<')
         {
-            if ((i > 0 && !is_space(s[i - 1])) || (i + 1 < final && !is_space(s[i + 1])))
-            {
-                printf("syntax error\n");
-                return (-1);
-            }
-            if (((s[i] == '>' &&  s[i + 1] == '>') && i + 1 < final) || ((s[i] == '<' && s[i + 1] == '<') && (i + 1 < final)))
-            {
+            if ((s[i] == '>' && i + 1 < final && s[i + 1] == '>') || 
+                (s[i] == '<' && i + 1 < final && s[i + 1] == '<'))
+                {
                 if ((i > 0 && !is_space(s[i - 1])) || (i + 2 < final && !is_space(s[i + 2])))
                 {
                     printf("syntax error\n");
@@ -110,17 +107,19 @@ static int check_syntax(const char *s, size_t init, size_t final)
                 }
                 i++;
             }
+            else
+            {
+                if ((i > 0 && !is_space(s[i - 1])) || (i + 1 < final && !is_space(s[i + 1])))
+                {
+                    printf("syntax error\n");
+                    return (-1);
+                }
+            }
         }
         i++;
     }
     return (0);
 }
-
-/*
-int main()
-{
-    printf("%d\n", check_syntax("hba |f", 0, 10));
-}*/
 
 char **ft_splitmeta(char const *s, char c)
 {
