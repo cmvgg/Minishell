@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/31 12:47:50 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:46:59 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,25 +119,30 @@ char **runspace(char **split)
     return result;
 }
 
+
+
 int main()
 {
     const char *line;
-    
+
     line = readline("Ingresa una línea de texto: ");
 
     char **split = ft_splitmeta(line, ' ');
 
     if (!split)
         return 1;
+
     char **result = runspace(split);
     int quote = ft_quote(result);
     int i = 0;
+
     while (result[i])
     {
         printf("El resultado es: %s\n", result[i]);
         i++;
     }
     printf("quote es %d\n", quote);
+
     i = 0;
     while (result[i])
     {
@@ -145,34 +150,7 @@ int main()
         i++;
     }
     free(result);
+    free(split);
+
     return 0;
 }
-
-
-/*int main()
-{
-    char *variable_name = "PATH";
-    char *expanded_value = expand_variable(variable_name);
-    if (expanded_value)
-    {
-        printf("El valor de %s es: %s\n", variable_name, expanded_value);
-        free(expanded_value);
-    } 
-    else 
-        printf("La variable %s no fue encontrada.\n", variable_name);
-    return 0;
-}*/
-
-/*int main()
-{
-    int i = 0;
-    char *str[] = {"wñigf suiahfi "awef" 'aoihfoh", NULL};
-    
-    while(str[i])
-	{
-        printf("%d\n", ft_quote(str));
-        i++;
-    }
-    
-    return 0;
-}*/
