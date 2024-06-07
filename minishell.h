@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:41:38 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/06 12:19:52 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:04:43 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,4 @@ char	**ft_splitquote(char const *s, char c);
 char	**ft_splitmeta(char const *s, char c);
 char    *expand_variable(char *variable_name);
 
-
+/*y*/

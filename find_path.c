@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:53:04 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/07 09:55:34 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:03:42 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,4 @@ char *find_in_path(const char *cmd)
     ft_free(directories);
     return NULL; 
 }
+/*hdf*/

@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:48:55 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/06 16:55:44 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:03:47 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ char **ft_splitmeta(char const *s, char c)
     split[limit] = 0;
     return split;
 }
-
+/*dh*/
 
 /*int main()
 {

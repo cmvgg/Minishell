@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:16:31 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/07 09:55:39 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:03:36 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ bool is_builtin(const char *cmd)
     return false;
 }
 
-
 bool is_executable_file(const char *cmd)
 {
     if (access(cmd, X_OK) == 0)
@@ -52,6 +51,7 @@ bool is_executable_file(const char *cmd)
     return (false);
 }
 /*akwlefnj */
+/*drgs*/
 
 int open_file(const char *filename)
 {
