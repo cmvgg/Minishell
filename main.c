@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:39:07 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/07 10:04:22 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:14:46 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ char **runspace(char **split)
     result[result_index] = NULL;
     return result;
 }
+
+
+
 int main()
 {
     const char *line;
@@ -151,5 +154,3 @@ int main()
 
     return 0;
 }
-
-/*gr*/
