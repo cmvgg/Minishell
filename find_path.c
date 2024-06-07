@@ -6,16 +6,20 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 18:53:04 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/07 10:03:42 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:31:07 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include "inc/libft/01-Libft/libft.h"
 
 
 static char *ft_strcat(char *dest, const char *src)
 {
-    size_t dest_len = ft_strlen(dest);
+    size_t dest_len = strlen(dest);
     size_t i = 0;
     
     while (src[i] != '\0')
@@ -42,23 +46,60 @@ static char *ft_strcpy(char *dst, const char *src)
     return dst;
 }
 
-static char	**ft_free(char **split)
+static char **ft_free(char **split)
 {
-	int	limit;
-
-	limit = 0;
-	while (split[limit] != 0)
-	{
-		free(split[limit]);
-		split[limit] = NULL;
-		limit++;
-	}
-	free(split);
-	split = NULL;
-	return (0);
+    int limit = 0;
+    while (split[limit] != 0)
+    {
+        free(split[limit]);
+        split[limit] = NULL;
+        limit++;
+    }
+    free(split);
+    split = NULL;
+    return 0;
 }
 
-char *find_in_path(const char *cmd)
+bool is_in_path(const char *cmd)
+{
+    char *path = getenv("PATH");
+    if (path == NULL)
+        return false;
+    
+    char **directories = ft_split(path, ':');
+    if (directories == NULL)
+        return false;
+
+    int index = 0;
+    while (directories[index] != NULL)
+    {
+        int len = ft_strlen(directories[index]) + ft_strlen(cmd) + 2; 
+        char *full_path = (char *)malloc(len * sizeof(char)); 
+        if (full_path == NULL)
+        {
+            ft_free(directories);
+            return false;
+        }
+        ft_strcpy(full_path, directories[index]); 
+        ft_strcat(full_path, "/"); 
+        ft_strcat(full_path, cmd); 
+        if (access(full_path, X_OK) == 0)
+        {
+            free(full_path);
+            ft_free(directories);
+            return true; 
+        }
+        free(full_path); 
+        index++;
+    }
+    ft_free(directories);
+    return false; 
+}
+
+
+
+
+/*char *find_in_path(const char *cmd)
 {
     char *path = getenv("PATH");
     if (path == NULL)
@@ -92,4 +133,4 @@ char *find_in_path(const char *cmd)
     ft_free(directories);
     return NULL; 
 }
-/*hdf*/
+*/
