@@ -6,7 +6,7 @@
 /*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:48:55 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/03 16:29:16 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:55:44 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static char **ft_free(char **split)
     return 0;
 }
 
-
 static int check_syntax(const char *s, size_t init, size_t final)
 {
     size_t i = init;
@@ -99,7 +98,7 @@ static int check_syntax(const char *s, size_t init, size_t final)
         {
             if ((s[i] == '>' && i + 1 < final && s[i + 1] == '>') || 
                 (s[i] == '<' && i + 1 < final && s[i + 1] == '<'))
-                {
+            {
                 if ((i > 0 && !is_space(s[i - 1])) || (i + 2 < final && !is_space(s[i + 2])))
                 {
                     printf("syntax error\n");
@@ -127,15 +126,29 @@ char **ft_splitmeta(char const *s, char c)
     size_t limit = 0;
     size_t init = 0;
     size_t final = 0;
-    bool in_quotes = false;
-    char quote_char = '\0';
+    bool in_quotes;
+    char quote_char;
 
-    split = malloc((ft_count_word(s, c) + 1) * sizeof(char *));
+    size_t word_count = ft_count_word(s, c);
+    if (word_count == 0)
+        return NULL;
+
+    split = malloc((word_count + 1) * sizeof(char *));
     if (!split)
         return 0;
 
-    while (limit < ft_count_word(s, c))
+    size_t i = 0;
+    while (i <= word_count)
     {
+        split[i] = NULL;
+        i++;
+    }
+
+    while (limit < word_count)
+    {
+        in_quotes = false;
+        quote_char = '\0';
+
         init = final;
         while (s[init] == c && s[init] != 0)
             init++;
@@ -154,11 +167,12 @@ char **ft_splitmeta(char const *s, char c)
 
         if (check_syntax(s, init, final) == -1)
         {
-            return (ft_free(split));
+            ft_free(split);
+            return NULL;
         }
 
         bool contains_dollar = false;
-        if (quote_char == 34 && in_quotes == false)
+        if (quote_char == 34 && !in_quotes)
         {
             size_t i = init;
             while (i < final)
@@ -171,9 +185,13 @@ char **ft_splitmeta(char const *s, char c)
                 i++;
             }
         }
+
         split[limit] = malloc(sizeof(char) * (final - init + 1));
         if (!split[limit])
-            return ft_free(split);
+        {
+            ft_free(split);
+            return NULL;
+        }
 
         ft_strlcpyquote(split[limit], s + init, final - init + 1);
 
