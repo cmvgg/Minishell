@@ -19,19 +19,15 @@ void ft_quote(char **result)
     {
         int f = 0; 
         while(result[j][f])
-        {   
-			write(1, "\n\nZ\n\n", 5);
-			printf("\n ascii: %i \n", result[j][0]);
+        {
             if((result[j][0] == 34) || ((result[j][f] == 39) && simple++)) 
             {
-				write(1, "\n\nY\n\n", 5);
                 quote++;
                 f++;
                 while(result[j][f])
                 {
                     if((result[j][f] == 34) || ((result[j][f] == 39) && (simple != 0)))
                     {
-						write(1, "\n\nX\n\n", 5);
                         quote--;
 							f++; 
                         break;
@@ -43,8 +39,7 @@ void ft_quote(char **result)
         }
         j++;
     }
-	printf("\nquote : %i\n", quote);
-    if(quote != 0)
+    if(quote != 1)
 	perror("syntax error");
 }
 

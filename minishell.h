@@ -32,5 +32,6 @@ char	*find_in_path(const char *cmd);
 bool	is_executable_file(const char *cmd);
 int		open_file(const char *filename);
 void	free_ft_splitmeta(char **array);
-
+char **ft_split_flags(char **split, int space_flag, char **result);
+int ft_check(char **result, int quote);
 
