@@ -1,47 +1,62 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/21 17:45:56 by jllarena          #+#    #+#              #
-#    Updated: 2024/06/06 17:02:51 by jllarena         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+CC = cc
+NAME = minishell
+CFLAGS = -Wall -Wextra -Werror -g3 -Wpedantic -I./includes #-fsanitize=address
+RM = rm -rf
+LIBFT = ./libft/libft.a
+VPATH = src src/parser src/utils src/parser/token src/parser/commands src/parser/env_list\
+		src/bins src/builtins src/builtins/echo	src/builtins/export src/parser/env src/pipe\
+		src/redir
 
-NAME            = minishell
-CC              = cc
-RM              = rm -rf
-CFLAGS          = -Wall -Wextra -Werror -Iinc/libft/01-Libft -g3 #-fsanitize=leak
-LREADLINE_FLAGS = -lreadline
-LIBFT_DIR       = inc/libft/01-Libft
-LIBFT           = $(LIBFT_DIR)/libft.a
+UTILS = utils utils2 utils3
+TOKEN = create_token_list def_token_types token_utils
+COMMANDS = create_commands_list create_commands_list_utils
+PARSER = parser parser_utils parser_utils2 parser_utils3
+ENV = create_env_list
+BINS = check_bins check_bins_utils signal_handler signal_handler2
+BUILTINS = echo export check_builtins env cd unset exit
+PIPE = pipe
+REDIR = redir
+MAIN = main free_structs
 
-SRC = main.c ft_splitquote.c ft_splitmeta.c expand_variable.c \
-		builtins.c
+SRCS =	$(addsuffix .c, $(UTILS))\
+		$(addsuffix .c, $(TOKEN))\
+		$(addsuffix .c, $(COMMANDS))\
+		$(addsuffix .c, $(PARSER))\
+		$(addsuffix .c, $(ENV))\
+		$(addsuffix .c, $(BINS))\
+		$(addsuffix .c, $(BUILTINS))\
+		$(addsuffix .c, $(PIPE))\
+		$(addsuffix .c, $(REDIR))\
+		$(addsuffix .c, $(MAIN))\
 
-OBJ = $(SRC:.c=.o)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+OBJ_DIR = obj
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
+	clear
 
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT) $(LREADLINE_FLAGS)
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(MAKE) --no-print-directory -C ./libft
+	$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME) $(LIBFT)
 
-$(LIBFT):
-	make -C $(LIBFT_DIR)
+$(OBJ_DIR):
+	mkdir -p obj
+
+$(OBJ_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(LINK)
 
 clean:
-	$(RM) $(OBJ)
-	make -C $(LIBFT_DIR) clean
-
+	$(MAKE) clean -C ./libft
+	$(RM) $(OBJ_DIR)
+	$(RM) $(OBJS)
+	
 fclean: clean
+	$(MAKE) fclean -C ./libft
 	$(RM) $(NAME)
-	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+run: re
+	./minishell
+
+.PHONY: all clean fclean re run
