@@ -1,3 +1,5 @@
+#include "minishell.h"
+
 t_env	*lstnew_env(char *envp, int flag)
 {
 	t_env	*node = malloc(sizeof(t_env));
@@ -19,16 +21,16 @@ static t_env	*lstlast_env(t_env *lst)
 	return lst;
 }
 
-void	lstadd_back_env(t_env **lst, t_env *new)
+void	lstadd_back_env(t_env *lst, t_env *new)
 {
 	if (!new)
 		return;
-	if (!*lst)
+	if (!lst)
 	{
-		*lst = new;
+		*lst = *new;
 		return;
 	}
-	t_env *tail = lstlast_env(*lst);
+	t_env *tail = lstlast_env(lst);
 	if (tail)
 		tail->next = new;
 }
@@ -44,7 +46,7 @@ t_env	*init_env(char **envp)
 		if (!head)
 			head = current;
 		else
-			lstadd_back_env(&head, current);
+			lstadd_back_env(head, current);
 		i++;
 	}
 	return head;

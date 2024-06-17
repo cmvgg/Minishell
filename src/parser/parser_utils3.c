@@ -106,3 +106,27 @@ int function(t_commands *command)
     exit(g_exit_status);
     return 1;
 }
+
+
+
+int has_open_quotes(const char *str, int len)
+{
+    int i = 0;
+    bool in_single_quote = false;
+    bool in_double_quote = false;
+
+    while (i < len)
+    {
+        if (str[i] == '\'' && !in_double_quote)
+        {
+            in_single_quote = !in_single_quote;
+        }
+        else if (str[i] == '\"' && !in_single_quote)
+        {
+            in_double_quote = !in_double_quote;
+        }
+        i++;
+    }
+
+    return (in_single_quote || in_double_quote);
+}

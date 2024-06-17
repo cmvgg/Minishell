@@ -15,14 +15,14 @@ int env_len(t_env *env)
 
 static int is_executable(char *bin_path, struct stat f)
 {
-    int result = NOT_EXECUTABLE;
+    int result = 0;
     
     if ((f.st_mode & S_IFMT) == S_IFREG) {
         if (f.st_mode & S_IXUSR) {
-            result = EXECUTABLE;
+            result = 1;
         } else {
             printf("Permission denied: %s\n", bin_path);
-            result = EXECUTION_ERROR;
+            result = -1;
         }
     }
     
@@ -49,14 +49,14 @@ int check_bins(t_tokens *token, t_env *env)
             free(bin_path);
         } else {
             int exec_status = is_executable(bin_path, f);
-            if (exec_status == EXECUTABLE) {
+            if (exec_status == 1) {
                 while (path[i]) {
                     free(path[i]);
                     i++;
                 }
                 free(path);
                 return run_cmd(bin_path, token, env, 1);
-            } else if (exec_status == EXECUTION_ERROR) {
+            } else if (exec_status == -1) {
                 while (path[i]) {
                     free(path[i]);
                     i++;

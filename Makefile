@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -g3 -Wpedantic -I./includes #-fsanitize=address
 RM = rm -rf
 LIBFT = ./libft/libft.a
 VPATH = src src/parser src/utils src/parser/token src/parser/commands src/parser/env_list\
-		src/bins src/builtins src/builtins/echo	src/builtins/export src/parser/env src/pipe\
+		src/bins src/built_in src/built_in/echo	src/built_in/export src/parser/env src/pipe\
 		src/redir
 
 UTILS = utils utils2 utils3
@@ -12,7 +12,7 @@ TOKEN = create_token_list def_token_types token_utils
 COMMANDS = create_commands_list create_commands_list_utils
 PARSER = parser parser_utils parser_utils2 parser_utils3
 ENV = create_env_list
-BINS = check_bins check_bins_utils signal_handler signal_handler2
+BINS = check_bins check_bins_utils signal_handler signal_handler_utils
 BUILTINS = echo export check_builtins env cd unset exit
 PIPE = pipe
 REDIR = redir

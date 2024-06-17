@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char *form_variable(char *name, char *value)
+char *form_variable(const char *name, const char *value)
 {
     char *temp = ft_strjoin(name, "=");
     char *str = ft_strjoin(temp, value);
@@ -12,7 +12,7 @@ static bool env_exists(t_tokens *head, const char *new_env, const char *env_valu
 {
     while (head)
     {
-        int pos = search_ops_in_str(head->str, '=');
+        int pos = search_ops_in_str(head->str, "=");
         char *env_name = ft_substr(head->str, 0, pos);
         if (!ft_strcmp(new_env, env_name))
         {
@@ -39,15 +39,15 @@ static bool check_env_name(const char *name)
     return true;
 }
 
-void export(t_tokens *command_env)
+void export(t_env *command_env)
 {
-    t_tokens *env_head = command_env;
+    t_env *env_head = command_env;
 
     while (command_env && command_env->str)
     {
         if (ft_strchr(command_env->str, '='))
         {
-            int pos = search_ops_in_str(command_env->str, '=');
+            int pos = search_ops_in_str(command_env->str, "=");
             char *env_name = ft_substr(command_env->str, 0, pos);
             if (!check_env_name(env_name))
             {
@@ -55,10 +55,10 @@ void export(t_tokens *command_env)
                 return;
             }
             char *env_value = ft_substr(command_env->str, pos + 1, ft_strlen(command_env->str) - pos - 1);
-            if (!env_exists_update(env_head, env_name, env_value))
+            if (!env_exists(env_head, env_name, env_value))
             {
-                t_tokens *new_env = lstnew_env(form_variable(env_name, env_value), 1);
-                lstadd_back_env(&command_env, new_env);
+                t_env *new_env = lstnew_env(form_variable(env_name, env_value), 1);
+                lstadd_back_env(command_env, new_env);
             }
             free(env_name);
             free(env_value);

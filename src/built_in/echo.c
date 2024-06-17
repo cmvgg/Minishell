@@ -1,4 +1,4 @@
-#include "minishel.h"
+#include "minishell.h"
 
 static void print_all(t_tokens *token)
 {

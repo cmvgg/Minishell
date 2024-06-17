@@ -15,7 +15,7 @@ char **get_path(t_env *env)
     return NULL;
 }
 
-char *get_bin_path(char *path, const char *str)
+char *get_bin_path(char *path, char *str)
 {
     char *bin_path;
     char *small_bin_path;
@@ -54,7 +54,7 @@ void check_heredoc(t_tokens *token)
     }
 }
 
-void execute_cicle(const char *delim_line)
+void execute_cicle(char *delim_line)
 {
     int fd;
     ssize_t output;

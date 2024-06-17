@@ -60,6 +60,7 @@ int				check_redir(t_commands *commands);
 int				has_in_out(t_commands *command, t_tokens *head);
 void			search_for_redirs(t_commands *command);
 int				function(t_commands *command);
+int has_open_quotes(const char *str, int len);
 
 //PARSER/TOKEN/CREATE_TOKEN_LIST.C
 t_tokens		*token_list(char *line);
@@ -69,6 +70,7 @@ void			lstadd_back_token(t_tokens **lst, t_tokens *new);
 
 //PARSER/TOKEN/TOKEN_UTILS.C
 t_TokenType		which_red(char *str);
+void free_tokens_list(t_tokens *token);
 
 //BUILTINS/CHECK_BUILTINS.C
 int				check_builtins(t_commands *command);
@@ -98,8 +100,8 @@ int				print(t_tokens *token);
 int				change_dir(t_tokens *token, t_env *env);
 
 //BUILTINS/EXPORT/EXPORT.C
-void			export(t_commands *command);
-char			*form_variable(char *name, char *value);
+void			export(t_env *command);
+char			*form_variable(const char *name, const char *value);
 
 //BUILTINS/ENV/ENV.C
 int				env(t_env *env, int flag);
@@ -111,7 +113,7 @@ int				unset(t_tokens *token, t_env *env);
 //PARSER/ENV/CREATE_ENV_LIST.C
 t_env			*init_env(char **envp);
 t_env			*lstnew_env(char *envp, int flag);
-void			lstadd_back_env(t_env **lst, t_env *new);
+void			lstadd_back_env(t_env *lst, t_env *new);
 
 //SRC/PIPE/PIPE.C
 void			open_pipe(t_commands *commands);

@@ -29,3 +29,19 @@ t_TokenType which_red(char *str)
 
     return ERRO;
 }
+
+void free_tokens_list(t_tokens *token)
+{
+    t_tokens *temp;
+
+    while (token)
+    {
+        temp = token;
+        token = token->next;
+        if (temp->str)
+        {
+            free(temp->str);
+        }
+        free(temp);
+    }
+}

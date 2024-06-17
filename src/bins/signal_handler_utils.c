@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int g_exit_status = 0;
+
 
 static void handle_signal_redirs(int sig)
 {

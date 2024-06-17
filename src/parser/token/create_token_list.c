@@ -73,7 +73,7 @@ t_tokens *token_list(char *line)
     }
 
     t_tokens *head = NULL;
-    t_tokens *current_node = NULL;
+    //t_tokens *current_node = NULL;
     int i = 0;
 
     while (splitted[i])
@@ -92,7 +92,7 @@ t_tokens *token_list(char *line)
         if (!head)
             head = node;
 
-        current_node = node;
+        //current_node = node;
         i++;
     }
 
