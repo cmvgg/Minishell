@@ -1,19 +1,22 @@
+
 CC = cc
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror -g3 -Wpedantic -I./includes #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I./includes #-fsanitize=leak,address
 RM = rm -rf
 LIBFT = ./libft/libft.a
 VPATH = src src/parser src/utils src/parser/token src/parser/commands src/parser/env_list\
-		src/bins src/built_in src/built_in/echo	src/built_in/export src/parser/env src/pipe\
+		src/bins src/builtins src/builtins/echo	src/builtins/export src/parser/env src/pipe\
 		src/redir
 
 UTILS = utils utils2 utils3
 TOKEN = create_token_list def_token_types token_utils
-COMMANDS = create_commands_list create_commands_list_utils
-PARSER = parser parser_utils parser_utils2 parser_utils3
+COMMANDS = create_commands_list create_commands_list_utils create_commands_list_utils2
+PARSER = parser parser_utils parser_utils2 parser_utils3 parser_utils4
 ENV = create_env_list
-BINS = check_bins check_bins_utils signal_handler signal_handler_utils
-BUILTINS = echo export check_builtins env cd unset exit
+BINS = check_bins check_bins_utils signal_handler signal_handler2
+BUILTINS = check_builtins env cd unset exit
+ECHO = echo
+EXPORT = export
 PIPE = pipe
 REDIR = redir
 MAIN = main free_structs
@@ -25,6 +28,8 @@ SRCS =	$(addsuffix .c, $(UTILS))\
 		$(addsuffix .c, $(ENV))\
 		$(addsuffix .c, $(BINS))\
 		$(addsuffix .c, $(BUILTINS))\
+		$(addsuffix .c, $(ECHO))\
+		$(addsuffix .c, $(EXPORT))\
 		$(addsuffix .c, $(PIPE))\
 		$(addsuffix .c, $(REDIR))\
 		$(addsuffix .c, $(MAIN))\
@@ -34,6 +39,7 @@ OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 	clear
+	
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	$(MAKE) --no-print-directory -C ./libft
@@ -59,4 +65,12 @@ re: fclean all
 run: re
 	./minishell
 
-.PHONY: all clean fclean re run
+valf: re
+	valgrind  -s --leak-check=full ./minishell #--show-leak-kinds=all 
+
+val:  re
+	valgrind -s ./minishell
+
+PHONY: all clean fclean re run
+
+.SILENT:

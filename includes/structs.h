@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:35:28 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/24 19:35:32 by cvarela-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -13,10 +25,11 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define PROMPT "shell pequeno 🐚> "
+# define PROMPT "Minishell: > "
 # define EPARSE "parse error near '|'"
 # define CPARSE "parse error near '{}'"
 # define NAI "not a valid identifier"

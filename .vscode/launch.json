@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "//wsl.localhost/Ubuntu/home/cmvgg/42/mini",
-      "program": "//wsl.localhost/Ubuntu/home/cmvgg/42/mini/build/Debug/outDebug",
+      "cwd": "c:/Users/manu2/Downloads/42-minishell-master/src",
+      "program": "c:/Users/manu2/Downloads/42-minishell-master/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

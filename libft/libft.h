@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 12:17:23 by jllarena          #+#    #+#             */
-/*   Updated: 2023/10/23 11:31:37 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:34:34 by jllarena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,39 @@
 # define LIBFT_H
 
 # include <stdio.h>
-# include <unistd.h>
-# include <string.h>
 # include <stdlib.h>
-# include <stddef.h>
-# include <ctype.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_split_params
+{
+	char		**split;
+	const char	*s;
+	char		c;
+}	t_split_params;
+
+typedef struct s_word_pos
+{
+	size_t	start;
+	size_t	end;
+	bool	in_quotes;
+	char	quote_char;
+}	t_word_pos;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -70,7 +92,11 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
-int ft_strcmp(const char *s1, const char *s2);
+char	**ft_splitmeta(char const *s, char c);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_is_space(char c);
+void	ft_strlcpyquote(char *dst, const char *src, size_t size);
+size_t	ft_count_word(char const *s, char c);
+char	**ft_free(char **split);
 
 #endif

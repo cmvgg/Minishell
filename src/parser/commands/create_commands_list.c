@@ -1,32 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_commands_list.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:39:55 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/27 20:43:23 by jllarena         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	lstsize_commands(t_commands *commands)
-{
-	int	count;
-
-	count = 0;
-	while (commands)
-	{
-		count++;
-		commands = commands->next;
-	}
-	return (count);
-}
-
-static t_commands	*lstnew_commands(t_tokens *token, t_env *env)
-{
-	t_commands	*node;
-
-	node = malloc(sizeof(t_commands));
-	if (node == NULL)
-		return (NULL);
-	node->token = token;
-	node->env = env;
-	node->next = NULL;
-	return (node);
-}
-
-static t_commands	*lstlast_commands(t_commands *lst)
+t_commands	*lstlast_commands(t_commands *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -35,7 +21,7 @@ static t_commands	*lstlast_commands(t_commands *lst)
 	return (lst);
 }
 
-static void	lstadd_back_commands(t_commands **lst, t_commands *new)
+void	lstadd_back_commands(t_commands **lst, t_commands *new)
 {
 	t_commands	*tail;
 
@@ -50,30 +36,51 @@ static void	lstadd_back_commands(t_commands **lst, t_commands *new)
 	tail->next = new;
 }
 
-void	pipe_commands(char *str, t_env *env)
+int	lstsize_commands(t_commands *commands)
 {
-	int			i;
-	char		**pipe_splitted;
-	t_commands	*head;
-	t_commands	*current_node;
+	int	count;
 
-	i = 0;
-	pipe_splitted = ft_split(str, '|');
-	if (has_empty_pipe(pipe_splitted))
+	count = 0;
+	while (commands)
 	{
-		g_exit_status = 1;
-		printf("%s\n", EPARSE);
+		count++;
+		commands = commands->next;
+	}
+	return (count);
+}
+
+static void	process_command_list(t_commands *head)
+{
+	if (head == NULL)
 		return ;
-	}
-	head = lstnew_commands(token_list(pipe_splitted[i]), env);
-	current_node = head;
-	while (pipe_splitted[++i])
-	{
-		current_node = lstnew_commands(token_list(pipe_splitted[i]), env);
-		lstadd_back_commands(&head, current_node);
-	}
-	free(pipe_splitted);
 	remake_commands(head);
 	open_pipe(head);
-	free_structs(head, 0);
+	free_structs2(head);
+}
+
+void	pipe_commands(char *str, t_env *env)
+{
+	t_commands	*head;
+	char		**pipe_splitted;
+
+	pipe_splitted = split_commands(str);
+	if (pipe_splitted == NULL)
+	{
+		if (pipe_splitted[0])
+			free_pipe_splitted(pipe_splitted);
+		free(str);
+		return ;
+	}
+	head = create_command_list(pipe_splitted[0], env);
+	if (head == NULL)
+	{
+		free_pipe_splitted(pipe_splitted);
+		free(str);
+		return ;
+	}
+	free(str);
+	add_nodes_to_command_list(&head, pipe_splitted, env);
+	free_pipe_splitted(pipe_splitted);
+	free_env(env);
+	process_command_list(head);
 }

@@ -1,51 +1,107 @@
-#include "minshell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_structs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:57:41 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/26 09:50:19 by cvarela-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void free_tokens(t_tokens *token)
+#include "minishell.h"
+
+void	free_tokens(t_tokens *token)
 {
-    t_tokens *node;
-    
-    while (token)
-    {
-        node = token;
-        token = token->next;
-        
-        if (node->str && ft_strcmp(node->str, "$") != 0)
-            free(node->str);
-        
-        free(node);
-    }
+	int			size;
+	int			i;
+	t_tokens	*node;
+
+	i = -1;
+	size = lstsize_tokens(token, 0);
+	while (++i < size)
+	{
+		node = token;
+		token = token->next;
+		if (node->str)
+		{
+			free(node->str);
+			node->str = NULL;
+		}
+		free(node);
+	}
 }
 
-void free_env(t_env *env)
+void	free_env(t_env *env)
 {
-    t_env *node;
-    
-    while (env)
-    {
-        node = env;
-        env = env->next;
-        
-        if (node->was_added)
-            free(node->str);
-        
-        free(node);
-    }
+	int		i;
+	int		size;
+	t_env	*node;
+
+	i = -1;
+	size = env_len(env);
+	while (++i < size)
+	{
+		node = env;
+		env = env->next;
+		if (node->was_added)
+			free(node->str);
+	}
 }
 
-void free_structs(t_commands *commands, int flag)
+void	free_structs(t_commands *commands, int flag)
 {
-    t_commands *node;
-    int size = lstsize_commands(commands);
-    
-    while (commands)
-    {
-        node = commands;
-        commands = commands->next;
-        
-        free_tokens(node->token);
-        if (flag)
-            free_env(node->env);
-        
-        free(node);
-    }
+	int			size;
+	int			i;
+	t_commands	*node;
+
+	i = -1;
+	if (flag)
+		free_env(commands->env);
+	size = lstsize_commands(commands);
+	while (++i < size)
+	{
+		node = commands;
+		free_tokens(commands->token);
+		commands = commands->next;
+		free(node);
+	}
+}
+
+void	free_tokens_s(t_tokens *token)
+{
+	int			size;
+	int			i;
+	t_tokens	*node;
+
+	i = -1;
+	size = lstsize_tokens(token, 0);
+	while (++i < size)
+	{
+		node = token;
+		token = token->next;
+		if (node->str)
+		{
+			node->str = NULL;
+		}
+		free(node);
+	}
+}
+
+void	free_structs2(t_commands *commands)
+{
+	int			size;
+	int			i;
+	t_commands	*node;
+
+	i = -1;
+	size = lstsize_commands(commands);
+	while (++i < size)
+	{
+		node = commands;
+		free_tokens_s(commands->token);
+		commands = commands->next;
+		free(node);
+	}
 }

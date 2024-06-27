@@ -1,46 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:37:27 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/26 10:58:25 by cvarela-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void handle_signal(int sig)
+static void	handle_cmd_signal(int sig)
 {
-    if (sig == SIGINT)
+	if (sig == SIGINT)
 	{
-        g_exit_status = 130;
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+		g_exit_status = 130;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 }
 
-void handle_cmd_signals(void)
+static void	handle_global_signal(int sig)
 {
-    struct sigaction sa;
-
-    sa.sa_handler = handle_signal;
-    sa.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
-
-    sigaction(SIGINT, &sa, NULL);
+	if (sig == SIGINT)
+	{
+		g_exit_status = 130;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void handle_global_signals(void)
+void	handle_cmd_signals(void)
 {
-    struct sigaction sa;
-
-    sa.sa_handler = handle_signal;
-    sa.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
-
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_cmd_signal);
 }
 
-int get_exit_status(void)
+void	handle_global_signals(void)
 {
-    return g_exit_status;
-}
-
-void reset_exit_status(void)
-{
-    g_exit_status = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_global_signal);
 }

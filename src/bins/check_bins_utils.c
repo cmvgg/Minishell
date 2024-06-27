@@ -1,94 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_bins_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:36:12 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/24 19:36:52 by cvarela-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char **get_path(t_env *env)
+char	**get_path(t_env *env)
 {
-    char *value;
-    char **path;
+	char	**path;
+	char	*value;
 
-    value = env_value("PATH", env);
-    if (value)
+	value = env_value("PATH", env);
+	if (value)
 	{
-        path = ft_split(value, ':');
-        free(value);
-        return path;
-    }
-    return NULL;
+		path = ft_splitmeta(value, ':');
+		free(value);
+		return (path);
+	}
+	free(value);
+	return (NULL);
 }
 
-char *get_bin_path(char *path, char *str)
+char	*get_bin_path(char *path, char *str)
 {
-    char *bin_path;
-    char *small_bin_path;
+	char	*bin_path;
+	char	*small_bin_path;
 
-    if (!path || !str) {
-        return NULL;
-    }
-    small_bin_path = ft_strjoin(path, "/");
-    if (!small_bin_path) {
-        free(path);
-        return NULL;
-    }
-    bin_path = ft_strjoin(small_bin_path, str);
-    free(small_bin_path);
-    free(path);
-    return bin_path;
+	small_bin_path = ft_strjoin(path, "/");
+	bin_path = ft_strjoin(small_bin_path, str);
+	free(small_bin_path);
+	free(path);
+	return (bin_path);
 }
 
-void check_heredoc(t_tokens *token)
+void	check_heredoc(t_tokens *token)
 {
-    int fd;
+	int			fd;
 
-    while (token)
+	fd = 0;
+	while (token)
 	{
-        if (!token->skip && token->type == HEREDOC && token->next) {
-            heredoc_while(token->next->str);
-            fd = open("/tmp/1", O_RDONLY, 0644);
-            if (fd != -1) {
-                dup2(fd, STDIN_FILENO);
-                unlink("/tmp/1");
-                close(fd);
-            }
-            token->skip = 1;
-        }
-        token = token->next;
-    }
+		if (!token->skip && token->type == HEREDOC && token->next)
+		{
+			heredoc_while(token->next->str);
+			fd = open("/tmp/1", O_RDONLY, 0644);
+			dup2(fd, STDIN_FILENO);
+			unlink("/tmp/1");
+			token->skip = 1;
+		}
+		token = token->next;
+	}
 }
 
-void execute_cicle(char *delim_line)
+void	execute_cicle(char *delim_line)
 {
-    int fd;
-    ssize_t output;
-    char buff[4095 + 1];
+	int		fd;
+	int		output;
+	char	buff[4095];
 
-    if (!delim_line)
+	handle_signal_redir();
+	write(1, "> ", 2);
+	fd = open("/tmp/1", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	output = read(1, buff, 4095);
+	while (output > 0)
 	{
-        return;
-    }
-
-    handle_signal_redir();
-    write(STDOUT_FILENO, "> ", 2);
-
-    fd = open("/tmp/1", O_RDWR | O_CREAT | O_TRUNC, 0644);
-    if (fd == -1)
-	{
-        perror("open");
-        return;
-    }
-
-    output = read(STDIN_FILENO, buff, 4095);
-    while (output > 0)
-	{
-        handle_signal_redir();
-        buff[output] = '\0';
-        if (ft_strcmp(buff, delim_line) == 0)
-            break;
-        ft_putstr_fd(buff, fd);
-        write(STDOUT_FILENO, "> ", 2);
-        output = read(STDIN_FILENO, buff, 4095);
-    }
-
-    if (output == -1)
-        perror("read");
-
-    close(fd);
+		handle_signal_redir();
+		buff[output] = '\0';
+		if (!ft_strcmp(buff, delim_line))
+			break ;
+		ft_putstr_fd(buff, fd);
+		write(1, "> ", 2);
+		output = read(1, buff, 4095);
+	}
+	close (fd);
 }

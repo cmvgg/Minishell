@@ -1,11 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:41:10 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/27 20:36:07 by jllarena         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_variable(char *str, int *pos)
 {
 	char	*variable;
-	int		i = (*pos) + 1;
-	int		n = 0;
+	int		i;
+	int		n;
 
+	i = (*pos) + 1;
+	n = 0;
 	while (str[i] != '$' && str[i] != '=' && str[i] != ASPAS
 		&& str[i] != PLICAS && str[i] != ' ' && str[i])
 	{
@@ -13,12 +27,17 @@ char	*get_variable(char *str, int *pos)
 		i++;
 	}
 	(*pos) = i - 1;
-	variable = ft_substr(str, *pos - n + 1, n);
+	variable = malloc(sizeof(char) * n + 1);
+	variable[n] = '\0';
+	i = -1;
+	while (n--)
+		variable[++i] = str[(*pos) - n];
 	return (variable);
 }
 
 char	*search_variable(char *command, int *pos, t_env *env)
 {
+	char	*var_name;
 	char	*value;
 
 	if (isquote(command[(*pos) + 1]) && command[(*pos) + 2] != '$'
@@ -33,7 +52,7 @@ char	*search_variable(char *command, int *pos, t_env *env)
 		value = "$";
 	else
 	{
-		char *var_name = get_variable(command, pos);
+		var_name = get_variable(command, pos);
 		value = env_value(var_name, env);
 		free(var_name);
 	}
@@ -44,17 +63,19 @@ char	*search_variable(char *command, int *pos, t_env *env)
 char	*add_chars(char *expanding_str, char *str, int pos, int start)
 {
 	char	*new_str;
-	char	*temp = ft_substr(str, start, pos);
+	char	*temp;
 
-	if (!expanding_str)
-		return (temp);
-
-	new_str = ft_strjoin(expanding_str, temp);
-	if (ft_strcmp(expanding_str, "$"))
+	new_str = NULL;
+	temp = ft_substr(str, start, pos);
+	if (expanding_str && temp)
+	{
+		new_str = ft_strjoin(expanding_str, temp);
 		free(expanding_str);
-	free(temp);
-
-	return (new_str);
+		free(temp);
+		free(str);
+		return (new_str);
+	}
+	return (temp);
 }
 
 char	*if_variable(char *new_str, t_commands *command, int *start, int *i)
@@ -62,32 +83,32 @@ char	*if_variable(char *new_str, t_commands *command, int *start, int *i)
 	new_str = process_variable(command->token->str, i, new_str, command->env);
 	(*start) = (*i);
 	(*i)--;
-
 	return (new_str);
 }
 
 char	*if_quotes(char *new_str, t_commands *command, int *start, int *i)
 {
-	char	*handling = quote_handler(command->token->str, i, (*i) + 1, command->env);
+	char	*temp;
+	char	*handling;
 
 	search_for_redirs(command);
-
-	if (!handling)
-		return (new_str);
-
-	char	*temp = new_str;
-	new_str = ft_strjoin(temp, handling);
-
-	if (temp && ft_strcmp(temp, "$"))
-		free(temp);
-
-	if (handling && ft_strcmp(handling, "$"))
-		free(handling);
-
+	handling = quote_handler(command->token->str, i, (*i) + 1, command->env);
+	if (handling)
+	{
+		temp = new_str;
+		if (temp)
+		{
+			new_str = ft_strjoin(temp, handling);
+			if (temp && ft_strcmp(temp, "$"))
+				free(temp);
+			if (handling && ft_strcmp(handling, "$"))
+				free(handling);
+		}
+		else
+			new_str = handling;
+	}
 	(*start) = (*i);
-
 	if (command->token->str[(*i) + 1])
 		(*start)++;
-
 	return (new_str);
 }

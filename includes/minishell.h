@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/24 19:34:55 by cvarela-          #+#    #+#             */
+/*   Updated: 2024/06/26 20:04:55 by jllarena         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -23,13 +35,23 @@ char			**fill_args(t_tokens *token);
 char			**fill_env_matrix(t_env *env);
 int				is_accepted(t_tokens *token);
 int				is_bin(char *str);
+int				is_digit_signal(char *str);
 
 //PARSER/CREATE_COMMANDS_LIST.C
 void			pipe_commands(char *str, t_env *env);
 int				lstsize_commands(t_commands *commands);
+void			lstadd_back_commands(t_commands **lst, t_commands *new);
+t_commands		*lstlast_commands(t_commands *lst);
 
 //PARSER/CREATE_COMMANDS_LIST_UTILS.C
 void			remake_commands(t_commands *commands);
+
+//PARSER/CREATE_COMMANDS_LIST_UTILS2.C
+t_commands		*create_command_list(char *str, t_env *env);
+char			**split_commands(char *str);
+void			free_pipe_splitted(char **pipe_splitted);
+void			add_nodes_to_command_list(t_commands **head,
+					char **pipe_splitted, t_env *env);
 
 //PARSER/PARSER.C
 int				process_tokens(t_commands *command);
@@ -60,7 +82,9 @@ int				check_redir(t_commands *commands);
 int				has_in_out(t_commands *command, t_tokens *head);
 void			search_for_redirs(t_commands *command);
 int				function(t_commands *command);
-int has_open_quotes(const char *str, int len);
+
+//PARSE/PARSER_UTILS4.C
+int				has_open_quotes(const char *str, int len);
 
 //PARSER/TOKEN/CREATE_TOKEN_LIST.C
 t_tokens		*token_list(char *line);
@@ -70,7 +94,6 @@ void			lstadd_back_token(t_tokens **lst, t_tokens *new);
 
 //PARSER/TOKEN/TOKEN_UTILS.C
 t_TokenType		which_red(char *str);
-void free_tokens_list(t_tokens *token);
 
 //BUILTINS/CHECK_BUILTINS.C
 int				check_builtins(t_commands *command);
@@ -100,8 +123,8 @@ int				print(t_tokens *token);
 int				change_dir(t_tokens *token, t_env *env);
 
 //BUILTINS/EXPORT/EXPORT.C
-void			export(t_env *command);
-char			*form_variable(const char *name, const char *value);
+void			export(t_commands *command);
+char			*form_variable(char *name, char *value);
 
 //BUILTINS/ENV/ENV.C
 int				env(t_env *env, int flag);
@@ -113,13 +136,15 @@ int				unset(t_tokens *token, t_env *env);
 //PARSER/ENV/CREATE_ENV_LIST.C
 t_env			*init_env(char **envp);
 t_env			*lstnew_env(char *envp, int flag);
-void			lstadd_back_env(t_env *lst, t_env *new);
+void			lstadd_back_env(t_env **lst, t_env *new);
 
 //SRC/PIPE/PIPE.C
 void			open_pipe(t_commands *commands);
 
 //SRC/PIPE/FREE_STRUCTS.C
 void			free_structs(t_commands *commands, int flag);
+void			free_env(t_env *env);
+void			free_structs2(t_commands *commands);
 
 //SRC/REDIRECTIONS/REDIR.C
 int				files_exist(t_tokens *token);

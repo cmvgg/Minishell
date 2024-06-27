@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 10:36:42 by jllarena          #+#    #+#             */
-/*   Updated: 2024/05/22 17:16:38 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:58:54 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	}
 	dst[destino + i] = '\0';
 	return (destino + origen);
-}	
+}
 
 /*
 int main(void)

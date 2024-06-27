@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:59:47 by alvicina          #+#    #+#             */
-/*   Updated: 2023/10/24 09:18:51 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:12:02 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static size_t	ft_count_word(char const *s, char c)
-{
-	size_t	init;
-	size_t	count;
-	size_t	final;
-
-	final = 0;
-	count = 0;
-	init = 0;
-	while (s[init] != 0)
-	{
-		init = final;
-		while (s[init] == c && s[init] != 0)
-			init++;
-		if (s[init] != c && s[init] != 0)
-			count++;
-		final = init;
-		while (s[final] != c && s[final] != 0)
-			final++;
-		init = final;
-	}
-	return (count);
-}
-
-static char	**ft_free(char **split)
-{
-	int	limit;
-
-	limit = 0;
-	while (split[limit] != 0)
-	{
-		free(split[limit]);
-		split[limit] = NULL;
-		limit++;
-	}
-	free(split);
-	split = NULL;
-	return (0);
-}
 
 char	**ft_split(char const *s, char c)
 {
