@@ -66,7 +66,7 @@ run: re
 	./minishell
 
 valf: re
-	valgrind  -s --leak-check=full ./minishell #--show-leak-kinds=all 
+	valgrind  -s --leak-check=full --show-leak-kinds=all ./minishell  
 
 val:  re
 	valgrind -s ./minishell

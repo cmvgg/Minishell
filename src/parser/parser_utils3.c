@@ -113,7 +113,10 @@ int	function(t_commands *command)
 	{
 		if (!check_builtins(command)
 			&& !check_bins(command->token, command->env))
+			{
+			free_structs(command, 1);
 			return (0);
+			}
 	}
 	exit(g_exit_status);
 	return (1);

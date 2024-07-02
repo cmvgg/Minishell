@@ -81,6 +81,6 @@ void	pipe_commands(char *str, t_env *env)
 	free(str);
 	add_nodes_to_command_list(&head, pipe_splitted, env);
 	free_pipe_splitted(pipe_splitted);
-	free_env(env);
+//	free_env(env);
 	process_command_list(head);
 }

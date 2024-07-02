@@ -99,5 +99,6 @@ int	main(int argc, char **argv, char **envp)
 		printf("Error: Too many arguments!\n");
 	if (env)
 		free_env(env);
+	free(env);
 	return (0);
 }
