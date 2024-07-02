@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:41:10 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/27 20:36:07 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:06:10 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,16 @@ char	*add_chars(char *expanding_str, char *str, int pos, int start)
 
 	new_str = NULL;
 	temp = ft_substr(str, start, pos);
+	write(1, "Y", 1);
 	if (expanding_str && temp)
 	{
 		new_str = ft_strjoin(expanding_str, temp);
 		free(expanding_str);
 		free(temp);
-		free(str);
 		return (new_str);
 	}
+			write(1, "X", 1);
+	free(expanding_str);
 	return (temp);
 }
 

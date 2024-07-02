@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:58:08 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/27 20:43:34 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:23:26 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	all(char *line, t_env *env, int fd)
 		line = check_dpipe(line);
 		if (ft_strlen(line))
 			pipe_commands(line, env);
-//		free(line);
+		free(line);
 	}
 }
 

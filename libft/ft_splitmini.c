@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitmini.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:22:06 by jllarena          #+#    #+#             */
-/*   Updated: 2024/06/27 19:42:20 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:32:50 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,16 @@ static t_word_pos	find_word_end(const char *s, char c, size_t start)
 	return (pos);
 }
 
-static bool	allocate_and_copy_word(t_split_params *params, t_word_pos pos,
+bool	allocate_and_copy_word(t_split_params *params, t_word_pos pos,
 	size_t idx)
 {
+	long r;
+	r = idx;
 	params->split[idx] = malloc(sizeof(char) * (pos.end - pos.start + 1));
 	if (!params->split[idx])
 		return (false);
 	ft_strlcpyquote(params->split[idx], params->s + pos.start,
 		pos.end - pos.start + 1);
-	//free(params->split[idx]);
 	return (true);
 }
 

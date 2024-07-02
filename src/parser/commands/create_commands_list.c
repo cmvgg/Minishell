@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands_list.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:39:55 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/27 20:43:23 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:25:43 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ void	pipe_commands(char *str, t_env *env)
 		free(str);
 		return ;
 	}
-	free(str);
 	add_nodes_to_command_list(&head, pipe_splitted, env);
 	free_pipe_splitted(pipe_splitted);
-//	free_env(env);
 	process_command_list(head);
 }

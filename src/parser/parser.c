@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jllarena <jllarena@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:41:27 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/27 19:56:13 by jllarena         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:05:31 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ char	*process_argument(t_commands *c)
 	i = 0;
 	start = 0;
 	new_str = NULL;
+	
 	while (c->token->str[i])
 	{
+		printf("\n\n--new==%s--\n\n", new_str);
 		while (c->token->str[i] && c->token->str[i] != '$'
 			&& !isquote(c->token->str[i]))
 			i++;
@@ -109,7 +111,7 @@ char	*process_argument(t_commands *c)
 			return (free(new_str), c->token->str);
 		i++;
 	}
-	return (free(c->token->str), new_str);
+	return (new_str);
 }
 
 void	parser(t_commands *command)
@@ -143,8 +145,6 @@ void	parser(t_commands *command)
 		return ((void)printf("%s\n", SE));
 	if (process_tokens(command))
 		return ;
-	if (command->token->str)
-		free(command->token->str);
 	printf("%s\n", CNF);
 	exit(g_exit_status);
 }

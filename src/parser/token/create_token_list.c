@@ -6,7 +6,7 @@
 /*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:40:18 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/26 11:07:06 by cvarela-         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:11:42 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ t_tokens	*token_list(char *line)
 		current_node = lstnew_token(splitted[i], token_type(splitted[i], 0, 0));
 		lstadd_back_token(&head, current_node);
 	}
-	free(splitted);
 	free(trimmed_line);
 	free(line);
 	return (head);

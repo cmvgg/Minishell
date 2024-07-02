@@ -6,7 +6,7 @@
 /*   By: cvarela- <cvarela-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:41:03 by cvarela-          #+#    #+#             */
-/*   Updated: 2024/06/24 19:41:05 by cvarela-         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:03:38 by cvarela-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	*process_variable(char *str, int *i, char *expanding, t_env *env)
 	char	*temp;
 
 	temp = search_variable(str, i, env);
+	new_str = NULL;
 	if (expanding)
 	{
 		if (temp)
@@ -121,5 +122,6 @@ char	*process_variable(char *str, int *i, char *expanding, t_env *env)
 			free(temp);
 		return (new_str);
 	}
+	free(new_str);
 	return (temp);
 }
