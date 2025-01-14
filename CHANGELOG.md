@@ -1,3 +1,4 @@
+44ed714 - Cesar Manuel Varela Garcia, 17 seconds ago : Correcciones de linting 14/01/2025--19:06
 9700653 - cmvgg, 8 months ago : restore
 c2b70bc - Javier Llarena Rodriguez, 8 months ago : removed
 41216b1 - Javier Llarena Rodriguez, 8 months ago : dont read metacharacters
